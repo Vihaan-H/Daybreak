@@ -1,0 +1,579 @@
+/**
+ * server.ts -- Web UI entry point
+ *
+ * Starts a local HTTP server (default port 3456) that serves:
+ *   - A single-page web UI (ui.html) for managing wallpapers
+ *   - A REST API for quote/wallpaper operations
+ *
+ * API routes:
+ *   GET  /api/today              - Current quote and wallpaper status
+ *   POST /api/generate           - Generate (or shuffle) a new wallpaper
+ *   POST /api/generate/iphone    - Generate an iPhone-sized wallpaper
+ *   GET  /api/wallpaper/today    - Serve today's wallpaper as PNG
+ *   GET  /api/wallpaper/iphone   - Serve today's iPhone wallpaper as PNG
+ *   GET  /api/archive            - List all archived wallpapers
+ *   GET  /api/archive/:filename  - Serve an archived wallpaper (with optional ?thumb=1)
+ *   GET  /api/sources            - List all quote sources with active status
+ *   PUT  /api/sources            - Update which sources are active
+ *   GET  /api/settings           - Current display/render settings
+ *   PUT  /api/settings           - Update display/render settings
+ *   GET  /api/schedule           - Scheduler status (platform-aware)
+ *   POST /api/schedule/install   - Install the daily scheduler
+ *   POST /api/schedule/uninstall - Remove the daily scheduler
+ *
+ * Usage:  npm run ui   (or:  npx tsx src/server.ts)
+ */
+
+import http from "http";
+import { readFileSync, readdirSync, existsSync, writeFileSync, unlinkSync } from "fs";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
+import { execSync } from "child_process";
+import sharp from "sharp";
+
+import { loadConfig } from "./config.js";
+import { detectPlatform, openUrl } from "./utils/platform.js";
+import { loadQuoteSources, selectDailyQuote, selectRandomQuote } from "./quotes/loader.js";
+import {
+  ensureCacheDirs,
+  hasCachedWallpaper,
+  getCachedWallpaperPath,
+  getCachedBackgroundPath,
+  cleanOldCache,
+} from "./images/cache.js";
+import { fetchBackgroundImage } from "./images/unsplash.js";
+import { renderWallpaper, type RenderOptions } from "./canvas/renderer.js";
+import { archiveWallpaper } from "./wallpaper/archive.js";
+import { setWallpaper } from "./wallpaper/setter.js";
+import { getTodayString } from "./utils/date.js";
+import { registerFonts, getResolvedFontFamily } from "./canvas/fonts.js";
+import type { QuoteSource } from "./quotes/types.js";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const PORT = 3456;
+
+// ---------------------------------------------------------------------------
+// Quote state persistence
+//
+// Tracks which quote is currently displayed on the wallpaper. This is saved
+// to {cachePath}/current-quote.json so the web UI can show the active quote
+// without re-running the selection algorithm.
+// ---------------------------------------------------------------------------
+
+interface QuoteState {
+  date: string;
+  text: string;
+  author: string;
+  sourceId: string;
+  sourceName: string;
+  sourceTheme: string;
+}
+
+function getStatePath(): string {
+  const config = loadConfig();
+  return resolve(config.cachePath, "current-quote.json");
+}
+
+function saveQuoteState(quote: { text: string; author: string; source: { id: string; name: string; theme: string } }) {
+  const state: QuoteState = {
+    date: getTodayString(),
+    text: quote.text,
+    author: quote.author,
+    sourceId: quote.source.id,
+    sourceName: quote.source.name,
+    sourceTheme: quote.source.theme,
+  };
+  const config = loadConfig();
+  ensureCacheDirs(config);
+  writeFileSync(getStatePath(), JSON.stringify(state, null, 2));
+}
+
+function loadQuoteState(): QuoteState | null {
+  const statePath = getStatePath();
+  if (!existsSync(statePath)) return null;
+  try {
+    const state: QuoteState = JSON.parse(readFileSync(statePath, "utf-8"));
+    if (state.date !== getTodayString()) return null;
+    return state;
+  } catch {
+    return null;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// HTTP helpers
+// ---------------------------------------------------------------------------
+
+function sendJson(res: http.ServerResponse, data: unknown, status = 200) {
+  res.writeHead(status, { "Content-Type": "application/json" });
+  res.end(JSON.stringify(data));
+}
+
+function sendError(res: http.ServerResponse, status: number, message: string) {
+  sendJson(res, { error: message }, status);
+}
+
+async function parseBody(req: http.IncomingMessage): Promise<unknown> {
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    req.on("data", (chunk) => chunks.push(chunk));
+    req.on("end", () => {
+      try {
+        resolve(JSON.parse(Buffer.concat(chunks).toString()));
+      } catch {
+        reject(new Error("Invalid JSON"));
+      }
+    });
+    req.on("error", reject);
+  });
+}
+
+function readConfigFile(): Record<string, unknown> {
+  const config = loadConfig();
+  const configPath = resolve(config.projectRoot, "data", "config.json");
+  return JSON.parse(readFileSync(configPath, "utf-8"));
+}
+
+function writeConfigFile(data: Record<string, unknown>) {
+  const config = loadConfig();
+  const configPath = resolve(config.projectRoot, "data", "config.json");
+  writeFileSync(configPath, JSON.stringify(data, null, 2) + "\n");
+}
+
+function getAllSources(): QuoteSource[] {
+  const config = loadConfig();
+  const quotesDir = resolve(config.projectRoot, "data", "quotes");
+  const files = readdirSync(quotesDir).filter((f) => f.endsWith(".json"));
+  return files.map((f) =>
+    JSON.parse(readFileSync(resolve(quotesDir, f), "utf-8"))
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Route handlers
+// ---------------------------------------------------------------------------
+
+async function handleToday(res: http.ServerResponse) {
+  const config = loadConfig();
+
+  // If a wallpaper was already generated (possibly via shuffle), use the saved quote
+  const savedState = loadQuoteState();
+  if (savedState) {
+    sendJson(res, {
+      date: savedState.date,
+      quote: {
+        text: savedState.text,
+        author: savedState.author,
+        source: { id: savedState.sourceId, name: savedState.sourceName, theme: savedState.sourceTheme },
+      },
+      hasWallpaper: hasCachedWallpaper(config),
+    });
+    return;
+  }
+
+  // No wallpaper generated yet today — show the deterministic daily quote
+  const sources = loadQuoteSources(config);
+  const quote = selectDailyQuote(sources);
+  sendJson(res, {
+    date: getTodayString(),
+    quote: {
+      text: quote.text,
+      author: quote.author,
+      source: { id: quote.source.id, name: quote.source.name, theme: quote.source.theme },
+    },
+    hasWallpaper: hasCachedWallpaper(config),
+  });
+}
+
+async function handleGenerate(req: http.IncomingMessage, res: http.ServerResponse) {
+  try {
+    let shuffle = false;
+    try {
+      const body = (await parseBody(req)) as Record<string, unknown>;
+      shuffle = body.shuffle === true;
+    } catch {}
+
+    const config = loadConfig();
+    ensureCacheDirs(config);
+
+    // Clear today's cache
+    const cachedWallpaper = getCachedWallpaperPath(config);
+    const cachedBg = getCachedBackgroundPath(config, getTodayString());
+    if (existsSync(cachedWallpaper)) unlinkSync(cachedWallpaper);
+    if (existsSync(cachedBg)) unlinkSync(cachedBg);
+
+    // Run pipeline
+    const sources = loadQuoteSources(config);
+    const quote = shuffle ? selectRandomQuote(sources) : selectDailyQuote(sources);
+    const backgroundPath = await fetchBackgroundImage(config, quote.source.theme);
+    const wallpaperBuffer = await renderWallpaper(config, quote, backgroundPath);
+    const archivedPath = archiveWallpaper(config, wallpaperBuffer);
+    writeFileSync(getCachedWallpaperPath(config), wallpaperBuffer);
+    setWallpaper(archivedPath, config.setAllDisplays);
+    saveQuoteState(quote);
+    cleanOldCache(config);
+
+    sendJson(res, {
+      success: true,
+      date: getTodayString(),
+      quote: { text: quote.text, author: quote.author },
+    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    sendError(res, 500, message);
+  }
+}
+
+const IPHONE_WIDTH = 1290;
+const IPHONE_HEIGHT = 2796;
+
+async function handleGenerateIphone(res: http.ServerResponse) {
+  try {
+    const config = loadConfig();
+    ensureCacheDirs(config);
+
+    // Use the same quote that's on the desktop wallpaper
+    const savedState = loadQuoteState();
+    const sources = loadQuoteSources(config);
+    let quote;
+    if (savedState) {
+      // Reconstruct a SelectedQuote-like object from saved state
+      const matchingSource = sources.find(s => s.id === savedState.sourceId);
+      quote = {
+        text: savedState.text,
+        author: savedState.author,
+        source: matchingSource ?? { id: savedState.sourceId, name: savedState.sourceName, theme: savedState.sourceTheme, quotes: [] },
+      };
+    } else {
+      quote = selectDailyQuote(sources);
+    }
+
+    // Fetch background (reuses cached if available)
+    const backgroundPath = await fetchBackgroundImage(config, quote.source.theme);
+
+    // Render at iPhone resolution
+    const iphoneBuffer = await renderWallpaper(config, quote, backgroundPath, {
+      width: IPHONE_WIDTH,
+      height: IPHONE_HEIGHT,
+    });
+
+    // Save to archive with -iphone suffix
+    const iphonePath = resolve(config.archivePath, `${getTodayString()}-iphone.png`);
+    if (!existsSync(config.archivePath)) {
+      const { mkdirSync } = await import("fs");
+      mkdirSync(config.archivePath, { recursive: true });
+    }
+    writeFileSync(iphonePath, iphoneBuffer);
+
+    sendJson(res, {
+      success: true,
+      date: getTodayString(),
+      path: iphonePath,
+      quote: { text: quote.text, author: quote.author },
+    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    sendError(res, 500, message);
+  }
+}
+
+async function handleWallpaperIphone(res: http.ServerResponse) {
+  const config = loadConfig();
+  const iphonePath = resolve(config.archivePath, `${getTodayString()}-iphone.png`);
+
+  if (!existsSync(iphonePath)) {
+    sendError(res, 404, "No iPhone wallpaper generated today. Generate one first.");
+    return;
+  }
+
+  const data = readFileSync(iphonePath);
+  res.writeHead(200, { "Content-Type": "image/png", "Cache-Control": "no-cache" });
+  res.end(data);
+}
+
+async function handleWallpaperToday(res: http.ServerResponse) {
+  const config = loadConfig();
+  const cachedPath = getCachedWallpaperPath(config);
+  const archivePath = resolve(config.archivePath, `${getTodayString()}.png`);
+  const filePath = existsSync(cachedPath) ? cachedPath : archivePath;
+
+  if (!existsSync(filePath)) {
+    sendError(res, 404, "No wallpaper generated today");
+    return;
+  }
+
+  const data = readFileSync(filePath);
+  res.writeHead(200, { "Content-Type": "image/png", "Cache-Control": "no-cache" });
+  res.end(data);
+}
+
+async function handleArchiveList(res: http.ServerResponse) {
+  const config = loadConfig();
+  if (!existsSync(config.archivePath)) {
+    sendJson(res, { wallpapers: [] });
+    return;
+  }
+
+  const files = readdirSync(config.archivePath)
+    .filter((f) => /^\d{4}-\d{2}-\d{2}(_\d{6})?\.png$/.test(f))
+    .sort()
+    .reverse();
+
+  sendJson(res, {
+    wallpapers: files.map((f) => ({
+      date: f.slice(0, 10),
+      filename: f,
+    })),
+  });
+}
+
+async function handleArchiveImage(res: http.ServerResponse, filename: string, thumb: boolean) {
+  if (!/^\d{4}-\d{2}-\d{2}(_\d{6})?(-iphone)?\.png$/.test(filename)) {
+    sendError(res, 400, "Invalid filename");
+    return;
+  }
+
+  const config = loadConfig();
+  const filePath = resolve(config.archivePath, filename);
+  if (!existsSync(filePath)) {
+    sendError(res, 404, "Not found");
+    return;
+  }
+
+  if (thumb) {
+    const buffer = await sharp(filePath).resize(400).png().toBuffer();
+    res.writeHead(200, { "Content-Type": "image/png", "Cache-Control": "no-cache" });
+    res.end(buffer);
+  } else {
+    const data = readFileSync(filePath);
+    res.writeHead(200, { "Content-Type": "image/png" });
+    res.end(data);
+  }
+}
+
+async function handleSources(res: http.ServerResponse) {
+  const config = loadConfig();
+  const allSources = getAllSources();
+  sendJson(res, {
+    sources: allSources.map((s) => ({
+      id: s.id,
+      name: s.name,
+      theme: s.theme,
+      quoteCount: s.quotes.length,
+      active: config.activeSources.includes(s.id),
+    })),
+  });
+}
+
+async function handleUpdateSources(req: http.IncomingMessage, res: http.ServerResponse) {
+  const body = (await parseBody(req)) as { activeSources: string[] };
+  if (!Array.isArray(body.activeSources)) {
+    sendError(res, 400, "activeSources must be an array");
+    return;
+  }
+
+  const configData = readConfigFile();
+  configData.activeSources = body.activeSources;
+  writeConfigFile(configData);
+  sendJson(res, { success: true, activeSources: body.activeSources });
+}
+
+async function handleSettings(res: http.ServerResponse) {
+  const config = loadConfig();
+  sendJson(res, {
+    background: config.background,
+    font: config.font,
+    setAllDisplays: config.setAllDisplays,
+    resolution: config.resolution,
+  });
+}
+
+async function handleUpdateSettings(req: http.IncomingMessage, res: http.ServerResponse) {
+  const body = (await parseBody(req)) as Record<string, unknown>;
+  const configData = readConfigFile();
+
+  if (body.background) configData.background = body.background;
+  if (body.font) configData.font = body.font;
+  if (body.resolution) configData.resolution = body.resolution;
+  if (typeof body.setAllDisplays === "boolean") configData.setAllDisplays = body.setAllDisplays;
+
+  writeConfigFile(configData);
+  sendJson(res, { success: true });
+}
+
+async function handlePlatform(res: http.ServerResponse) {
+  registerFonts();
+  sendJson(res, {
+    platform: detectPlatform(),
+    resolvedFont: getResolvedFontFamily(),
+  });
+}
+
+async function handleSchedule(res: http.ServerResponse) {
+  const platform = detectPlatform();
+  const config = loadConfig();
+
+  let installed = false;
+  let loaded = false;
+  let lastLog = "";
+  let lastErr = "";
+
+  if (platform === "macos") {
+    const plistDest = resolve(
+      config.cachePath, "..", "..", "Library", "LaunchAgents", "com.inspiration.daily.plist"
+    );
+    installed = existsSync(plistDest);
+    try {
+      const output = execSync("launchctl list 2>/dev/null", { encoding: "utf-8" });
+      loaded = output.includes("com.inspiration.daily");
+    } catch {}
+    try { lastLog = execSync("tail -20 /tmp/inspiration.log 2>/dev/null", { encoding: "utf-8" }); } catch {}
+    try { lastErr = execSync("tail -10 /tmp/inspiration.err 2>/dev/null", { encoding: "utf-8" }); } catch {}
+  } else if (platform === "windows") {
+    try {
+      const output = execSync('schtasks /Query /TN "DailyInspiration" 2>nul', { encoding: "utf-8" });
+      installed = true;
+      loaded = output.includes("Ready") || output.includes("Running");
+    } catch {}
+  } else {
+    // Linux/ChromeOS — check crontab
+    try {
+      const output = execSync("crontab -l 2>/dev/null", { encoding: "utf-8" });
+      installed = output.includes("inspiration");
+      loaded = installed;
+    } catch {}
+  }
+
+  sendJson(res, {
+    platform,
+    installed,
+    loaded,
+    status: loaded ? "running" : installed ? "installed" : "not installed",
+    scheduledTime: "7:00 AM",
+    lastLog,
+    lastErr,
+  });
+}
+
+async function handleScheduleInstall(res: http.ServerResponse) {
+  try {
+    const config = loadConfig();
+    const platform = detectPlatform();
+    let script: string;
+    let cmd: string;
+
+    if (platform === "macos") {
+      script = resolve(config.projectRoot, "scripts", "install-launchd.sh");
+      cmd = `bash "${script}"`;
+    } else if (platform === "windows") {
+      script = resolve(config.projectRoot, "scripts", "install-task-scheduler.ps1");
+      cmd = `powershell -NoProfile -ExecutionPolicy Bypass -File "${script}"`;
+    } else {
+      script = resolve(config.projectRoot, "scripts", "install-cron.sh");
+      cmd = `bash "${script}"`;
+    }
+
+    const output = execSync(cmd, { encoding: "utf-8" });
+    sendJson(res, { success: true, output });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Failed to install";
+    sendError(res, 500, message);
+  }
+}
+
+async function handleScheduleUninstall(res: http.ServerResponse) {
+  try {
+    const config = loadConfig();
+    const platform = detectPlatform();
+    let cmd: string;
+
+    if (platform === "macos") {
+      const script = resolve(config.projectRoot, "scripts", "install-launchd.sh");
+      cmd = `bash "${script}" uninstall`;
+    } else if (platform === "windows") {
+      const script = resolve(config.projectRoot, "scripts", "install-task-scheduler.ps1");
+      cmd = `powershell -NoProfile -ExecutionPolicy Bypass -File "${script}" -Uninstall`;
+    } else {
+      const script = resolve(config.projectRoot, "scripts", "install-cron.sh");
+      cmd = `bash "${script}" uninstall`;
+    }
+
+    const output = execSync(cmd, { encoding: "utf-8" });
+    sendJson(res, { success: true, output });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Failed to uninstall";
+    sendError(res, 500, message);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Router -- maps HTTP method + path to the appropriate handler
+// ---------------------------------------------------------------------------
+
+async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse) {
+  const url = new URL(req.url ?? "/", `http://localhost:${PORT}`);
+  const path = url.pathname;
+  const method = req.method ?? "GET";
+
+  // CORS for local dev
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  if (method === "OPTIONS") {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
+  try {
+    // Serve frontend
+    if (path === "/" && method === "GET") {
+      const htmlPath = resolve(__dirname, "ui.html");
+      const html = readFileSync(htmlPath, "utf-8");
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(html);
+      return;
+    }
+
+    // API routes
+    if (path === "/api/today" && method === "GET") return handleToday(res);
+    if (path === "/api/generate" && method === "POST") return handleGenerate(req, res);
+    if (path === "/api/generate/iphone" && method === "POST") return handleGenerateIphone(res);
+    if (path === "/api/wallpaper/iphone" && method === "GET") return handleWallpaperIphone(res);
+    if (path === "/api/wallpaper/today" && method === "GET") return handleWallpaperToday(res);
+    if (path === "/api/archive" && method === "GET") return handleArchiveList(res);
+    if (path === "/api/sources" && method === "GET") return handleSources(res);
+    if (path === "/api/sources" && method === "PUT") return handleUpdateSources(req, res);
+    if (path === "/api/settings" && method === "GET") return handleSettings(res);
+    if (path === "/api/settings" && method === "PUT") return handleUpdateSettings(req, res);
+    if (path === "/api/platform" && method === "GET") return handlePlatform(res);
+    if (path === "/api/schedule" && method === "GET") return handleSchedule(res);
+    if (path === "/api/schedule/install" && method === "POST") return handleScheduleInstall(res);
+    if (path === "/api/schedule/uninstall" && method === "POST") return handleScheduleUninstall(res);
+
+    // Archive image: /api/archive/2026-03-25.png
+    if (path.startsWith("/api/archive/") && method === "GET") {
+      const filename = path.slice("/api/archive/".length);
+      const thumb = url.searchParams.get("thumb") === "1";
+      return handleArchiveImage(res, filename, thumb);
+    }
+
+    sendError(res, 404, "Not found");
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Internal server error";
+    console.error("Server error:", message);
+    sendError(res, 500, message);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Start the server and open the browser
+// ---------------------------------------------------------------------------
+
+const server = http.createServer(handleRequest);
+server.listen(PORT, () => {
+  console.log(`\n  Inspiration UI running at http://localhost:${PORT}\n`);
+  try {
+    execSync(openUrl(`http://localhost:${PORT}`));
+  } catch {}
+});

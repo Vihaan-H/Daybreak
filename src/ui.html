@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspiration</title>
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --bg-card: #1a1a1a;
+    --bg-hover: #242424;
+    --bg-input: #2a2a2a;
+    --border: #333;
+    --text: #e8e8e8;
+    --text-dim: #888;
+    --accent: #c8a45e;
+    --accent-hover: #dbb86e;
+    --green: #4caf50;
+    --yellow: #ffc107;
+    --red: #f44336;
+    --radius: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 220px;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    flex-shrink: 0;
+  }
+
+  .sidebar-title {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0 24px;
+    margin-bottom: 32px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+
+  .nav-item {
+    padding: 12px 24px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-dim);
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-item:hover { background: var(--bg-hover); color: var(--text); }
+  .nav-item.active {
+    color: var(--accent);
+    background: var(--bg-hover);
+    border-left-color: var(--accent);
+  }
+
+  .nav-icon { margin-right: 10px; font-size: 16px; }
+
+  /* Main */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  /* Today Section */
+  .wallpaper-preview {
+    width: 100%;
+    max-width: 900px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+    background: var(--bg-card);
+    aspect-ratio: 3456 / 2234;
+    position: relative;
+  }
+
+  .wallpaper-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .wallpaper-preview .placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-dim);
+    font-size: 16px;
+  }
+
+  .quote-display {
+    max-width: 900px;
+    margin-bottom: 24px;
+  }
+
+  .quote-text {
+    font-size: 20px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .quote-author {
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .quote-source-badge {
+    display: inline-block;
+    background: var(--bg-input);
+    color: var(--text-dim);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-left: 8px;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+  }
+
+  .btn-primary:hover { background: var(--accent-hover); }
+
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .btn-secondary {
+    background: var(--bg-input);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover { background: var(--bg-hover); }
+
+  .btn-danger {
+    background: transparent;
+    color: var(--red);
+    border: 1px solid var(--red);
+  }
+
+  .btn-danger:hover { background: rgba(244, 67, 54, 0.1); }
+
+  .btn-row { display: flex; gap: 12px; align-items: center; }
+
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .status-msg {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-left: 8px;
+  }
+
+  /* Archive Grid */
+  .archive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    max-width: 1200px;
+  }
+
+  .archive-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.15s;
+    border: 1px solid var(--border);
+  }
+
+  .archive-card:hover { transform: translateY(-2px); }
+
+  .archive-card img {
+    width: 100%;
+    aspect-ratio: 3456 / 2234;
+    object-fit: cover;
+    display: block;
+  }
+
+  .archive-card .date-label {
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal-overlay img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: var(--radius);
+  }
+
+  /* Sources */
+  .sources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    max-width: 1200px;
+  }
+
+  .source-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: opacity 0.15s;
+  }
+
+  .source-card.inactive { opacity: 0.45; }
+
+  .source-info h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .source-meta {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* Toggle Switch */
+  .toggle {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .toggle input { opacity: 0; width: 0; height: 0; }
+
+  .toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-input);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .toggle-slider::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: var(--text-dim);
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+
+  .toggle input:checked + .toggle-slider { background: var(--accent); }
+  .toggle input:checked + .toggle-slider::before {
+    transform: translateX(20px);
+    background: #000;
+  }
+
+  /* Settings */
+  .settings-form {
+    max-width: 600px;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .form-group input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+  }
+
+  .form-group input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 14px;
+  }
+
+  .range-value {
+    font-size: 13px;
+    color: var(--accent);
+    float: right;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 16px;
+  }
+
+  .form-row .form-group { flex: 1; }
+
+  /* Schedule */
+  .platform-cards {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+    max-width: 900px;
+  }
+
+  .platform-card {
+    flex: 1;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .platform-card:hover { border-color: var(--text-dim); }
+
+  .platform-card.active {
+    border-color: var(--accent);
+    background: rgba(200, 164, 94, 0.06);
+  }
+
+  .platform-card.detected .platform-detected-tag {
+    display: inline-block;
+  }
+
+  .platform-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .platform-name {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .platform-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .platform-detected-tag {
+    display: none;
+    font-size: 10px;
+    background: rgba(200, 164, 94, 0.15);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin-top: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .schedule-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .status-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .status-badge.running { background: rgba(76,175,80,0.15); color: var(--green); }
+  .status-badge.installed { background: rgba(255,193,7,0.15); color: var(--yellow); }
+  .status-badge.not-installed { background: rgba(244,67,54,0.15); color: var(--red); }
+
+  .platform-instructions {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 24px;
+    max-width: 900px;
+    line-height: 1.7;
+  }
+
+  .platform-instructions h3 {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .platform-instructions code {
+    background: var(--bg-input);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    font-size: 13px;
+  }
+
+  .platform-instructions .cmd-block {
+    display: block;
+    background: var(--bg-input);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    font-size: 13px;
+    margin: 10px 0;
+    color: var(--text);
+    word-break: break-all;
+  }
+
+  .platform-instructions .hint {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 10px;
+  }
+
+  .log-output {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    font-family: "SF Mono", "Menlo", monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    white-space: pre-wrap;
+    max-height: 400px;
+    overflow-y: auto;
+    max-width: 900px;
+  }
+
+  .log-label {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .schedule-time {
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .empty-state {
+    color: var(--text-dim);
+    font-size: 14px;
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  /* Loading skeleton for Today tab */
+  .loading-skeleton {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Source theme tag */
+  .source-theme {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(200, 164, 94, 0.1);
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin-top: 6px;
+  }
+
+  /* Settings select/dropdown */
+  .form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .form-group select option {
+    background: var(--bg-card);
+  }
+
+  .form-hint {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  /* Responsive: stack sidebar on small screens */
+  .sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-size: 22px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar-toggle { display: flex; }
+
+    .sidebar {
+      position: fixed;
+      left: -220px;
+      top: 0;
+      bottom: 0;
+      z-index: 150;
+      transition: left 0.2s;
+    }
+
+    .sidebar.open { left: 0; }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 140;
+    }
+
+    .sidebar-overlay.open { display: block; }
+
+    .main { padding: 60px 20px 20px; }
+
+    .btn-row { flex-wrap: wrap; }
+
+    .platform-cards { flex-direction: column; }
+
+    .form-row { flex-direction: column; gap: 0; }
+  }
+</style>
+</head>
+<body>
+
+<button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">&#9776;</button>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-title">Inspiration</div>
+  <div class="nav-item active" data-section="today">
+    <span class="nav-icon">&#9728;</span>Today
+  </div>
+  <div class="nav-item" data-section="archive">
+    <span class="nav-icon">&#9641;</span>Archive
+  </div>
+  <div class="nav-item" data-section="sources">
+    <span class="nav-icon">&#9783;</span>Sources
+  </div>
+  <div class="nav-item" data-section="settings">
+    <span class="nav-icon">&#9881;</span>Settings
+  </div>
+  <div class="nav-item" data-section="schedule">
+    <span class="nav-icon">&#9201;</span>Schedule
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- TODAY -->
+  <div id="today" class="section active">
+    <h2>Today's Inspiration</h2>
+    <div class="wallpaper-preview" id="wallpaper-preview">
+      <div class="placeholder" id="wallpaper-placeholder">
+        <span class="loading-skeleton" id="today-loading">Loading...</span>
+      </div>
+      <img id="wallpaper-img" style="display:none" alt="Today's wallpaper">
+    </div>
+    <div class="quote-display" id="quote-display" style="display:none">
+      <div class="quote-text" id="today-quote"></div>
+      <div class="quote-author">
+        <span id="today-author"></span>
+        <span class="quote-source-badge" id="today-source"></span>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="generate-btn" onclick="generateWallpaper()">Generate New Wallpaper</button>
+      <button class="btn btn-secondary" id="shuffle-btn" onclick="shuffleWallpaper()">&#8634; Shuffle Quote</button>
+      <button class="btn btn-secondary" id="iphone-btn" onclick="generateIphone()">&#9743; iPhone Wallpaper</button>
+      <span class="status-msg" id="generate-status"></span>
+    </div>
+    <div id="iphone-preview" style="display:none; margin-top:24px;">
+      <h3 style="font-size:16px; margin-bottom:12px; color:var(--text-dim);">iPhone Wallpaper</h3>
+      <div style="display:flex; gap:16px; align-items:flex-start;">
+        <div style="width:180px; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border);">
+          <img id="iphone-img" style="width:100%; display:block;" alt="iPhone wallpaper">
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <a id="iphone-download" class="btn btn-secondary" style="text-decoration:none; text-align:center;" download>Download PNG</a>
+          <span style="font-size:12px; color:var(--text-dim);">1290 x 2796px<br>iPhone Pro Max</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHIVE -->
+  <div id="archive" class="section">
+    <h2>Wallpaper Archive</h2>
+    <div class="archive-grid" id="archive-grid"></div>
+  </div>
+
+  <!-- SOURCES -->
+  <div id="sources" class="section">
+    <h2>Quote Sources</h2>
+    <div class="sources-grid" id="sources-grid"></div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div id="settings" class="section">
+    <h2>Settings</h2>
+    <div class="settings-form" id="settings-form">
+      <div class="form-group">
+        <label>Resolution Preset</label>
+        <select id="setting-resolution" onchange="applyResolutionPreset(this.value)">
+          <option value="1920x1080">1080p (1920 x 1080)</option>
+          <option value="2560x1440">1440p (2560 x 1440)</option>
+          <option value="2560x1664">MacBook Air 13" (2560 x 1664)</option>
+          <option value="3024x1964">MacBook Pro 14" (3024 x 1964)</option>
+          <option value="3456x2234">MacBook Pro 16" (3456 x 2234)</option>
+          <option value="3840x2160">4K UHD (3840 x 2160)</option>
+          <option value="1366x768">Chromebook HD (1366 x 768)</option>
+          <option value="custom">Custom...</option>
+        </select>
+      </div>
+      <div class="form-row" id="custom-resolution-row" style="display:none">
+        <div class="form-group">
+          <label>Width (px)</label>
+          <input type="text" id="setting-res-width" value="3456">
+        </div>
+        <div class="form-group">
+          <label>Height (px)</label>
+          <input type="text" id="setting-res-height" value="2234">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Darken Opacity <span class="range-value" id="opacity-value">0.45</span></label>
+        <input type="range" id="setting-opacity" min="0" max="1" step="0.05" value="0.45"
+               oninput="document.getElementById('opacity-value').textContent = this.value">
+      </div>
+      <div class="form-group">
+        <label>Blur Sigma <span class="range-value" id="blur-value">2</span></label>
+        <input type="range" id="setting-blur" min="0" max="10" step="0.5" value="2"
+               oninput="document.getElementById('blur-value').textContent = this.value">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Quote Font</label>
+          <input type="text" id="setting-font-quote" value="Avenir Next">
+          <div class="form-hint" id="font-hint"></div>
+        </div>
+        <div class="form-group">
+          <label>Attribution Font</label>
+          <input type="text" id="setting-font-attr" value="Avenir Next">
+        </div>
+      </div>
+      <div class="form-group" id="all-displays-group">
+        <label style="display:flex;align-items:center;gap:12px;">
+          Set on all displays
+          <label class="toggle">
+            <input type="checkbox" id="setting-all-displays" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </label>
+        <div class="form-hint" id="all-displays-hint"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+        <span class="status-msg" id="settings-status"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div id="schedule" class="section">
+    <h2>Schedule</h2>
+
+    <div class="platform-cards" id="platform-cards">
+      <div class="platform-card" data-platform="macos" onclick="selectPlatform('macos')">
+        <span class="platform-icon">&#63743;</span>
+        <div class="platform-name">macOS</div>
+        <div class="platform-sub">launchd</div>
+        <span class="platform-detected-tag">Detected</span>
+      </div>
+      <div class="platform-card" data-platform="windows" onclick="selectPlatform('windows')">
+        <span class="platform-icon">&#9114;</span>
+        <div class="platform-name">Windows</div>
+        <div class="platform-sub">Task Scheduler</div>
+        <span class="platform-detected-tag">Detected</span>
+      </div>
+      <div class="platform-card" data-platform="linux" onclick="selectPlatform('linux')">
+        <span class="platform-icon">&#9881;</span>
+        <div class="platform-name">Linux / ChromeOS</div>
+        <div class="platform-sub">cron</div>
+        <span class="platform-detected-tag">Detected</span>
+      </div>
+    </div>
+
+    <div class="schedule-status" id="schedule-status">
+      <span class="status-badge not-installed" id="schedule-badge">Loading...</span>
+      <span class="schedule-time" id="schedule-time"></span>
+    </div>
+
+    <div class="platform-instructions" id="platform-instructions"></div>
+
+    <div class="btn-row" style="margin-bottom:24px">
+      <button class="btn btn-primary" id="schedule-install-btn" onclick="installSchedule()" style="display:none">Install Schedule</button>
+      <button class="btn btn-danger" id="schedule-uninstall-btn" onclick="uninstallSchedule()" style="display:none">Uninstall Schedule</button>
+    </div>
+
+    <div class="log-label" id="log-section-label">Recent Log Output</div>
+    <div class="log-output" id="schedule-log">Loading...</div>
+  </div>
+
+</main>
+
+<!-- Modal for full-size archive view -->
+<div class="modal-overlay" id="modal" onclick="closeModal()">
+  <img id="modal-img" src="" alt="Wallpaper">
+</div>
+
+<script>
+// --- Sidebar toggle (mobile) ---
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+
+// --- Navigation ---
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    item.classList.add('active');
+    const section = item.dataset.section;
+    document.getElementById(section).classList.add('active');
+    // Close sidebar on mobile after navigation
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+    if (section === 'today') loadToday();
+    if (section === 'archive') loadArchive();
+    if (section === 'sources') loadSources();
+    if (section === 'settings') loadSettings();
+    if (section === 'schedule') loadSchedule();
+  });
+});
+
+// --- Today ---
+async function loadToday() {
+  try {
+    const res = await fetch('/api/today');
+    const data = await res.json();
+
+    // Show the quote
+    document.getElementById('quote-display').style.display = 'block';
+    document.getElementById('today-quote').textContent = `"${data.quote.text}"`;
+    document.getElementById('today-author').textContent = `— ${data.quote.author}`;
+    document.getElementById('today-source').textContent = data.quote.source.name;
+
+    if (data.hasWallpaper) {
+      const img = document.getElementById('wallpaper-img');
+      img.src = '/api/wallpaper/today?' + Date.now();
+      img.style.display = 'block';
+      document.getElementById('wallpaper-placeholder').style.display = 'none';
+    } else {
+      document.getElementById('wallpaper-img').style.display = 'none';
+      const placeholder = document.getElementById('wallpaper-placeholder');
+      placeholder.style.display = 'flex';
+      placeholder.textContent = 'No wallpaper generated yet';
+    }
+  } catch (err) {
+    console.error('Failed to load today:', err);
+    document.getElementById('wallpaper-placeholder').textContent = 'Failed to load';
+  }
+}
+
+async function generateWallpaper(shuffle = false) {
+  const btn = document.getElementById('generate-btn');
+  const shuffleBtn = document.getElementById('shuffle-btn');
+  const status = document.getElementById('generate-status');
+
+  btn.disabled = true;
+  shuffleBtn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Generating...';
+  status.textContent = shuffle
+    ? 'Shuffling quote and generating wallpaper...'
+    : 'Fetching image and rendering wallpaper...';
+
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ shuffle }),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      status.textContent = shuffle
+        ? `New quote set! "${data.quote.text.substring(0, 50)}..."`
+        : 'Wallpaper set!';
+      loadToday();
+    } else {
+      status.textContent = 'Error: ' + (data.error || 'Unknown error');
+    }
+  } catch (err) {
+    status.textContent = 'Error: ' + err.message;
+  } finally {
+    btn.disabled = false;
+    shuffleBtn.disabled = false;
+    btn.innerHTML = 'Generate New Wallpaper';
+    setTimeout(() => { status.textContent = ''; }, 5000);
+  }
+}
+
+function shuffleWallpaper() {
+  generateWallpaper(true);
+}
+
+async function generateIphone() {
+  const btn = document.getElementById('iphone-btn');
+  const status = document.getElementById('generate-status');
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Generating...';
+  status.textContent = 'Rendering iPhone wallpaper (1290x2796)...';
+
+  try {
+    const res = await fetch('/api/generate/iphone', { method: 'POST' });
+    const data = await res.json();
+
+    if (data.success) {
+      status.textContent = 'iPhone wallpaper ready!';
+      const preview = document.getElementById('iphone-preview');
+      const img = document.getElementById('iphone-img');
+      const download = document.getElementById('iphone-download');
+      img.src = '/api/wallpaper/iphone?' + Date.now();
+      download.href = '/api/wallpaper/iphone';
+      download.download = data.date + '-iphone.png';
+      preview.style.display = 'block';
+    } else {
+      status.textContent = 'Error: ' + (data.error || 'Unknown error');
+    }
+  } catch (err) {
+    status.textContent = 'Error: ' + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '&#9743; iPhone Wallpaper';
+    setTimeout(() => { status.textContent = ''; }, 5000);
+  }
+}
+
+// --- Archive ---
+async function loadArchive() {
+  const grid = document.getElementById('archive-grid');
+  try {
+    const res = await fetch('/api/archive');
+    const data = await res.json();
+
+    if (data.wallpapers.length === 0) {
+      grid.innerHTML = '<div class="empty-state">No archived wallpapers yet. Generate your first one!</div>';
+      return;
+    }
+
+    grid.innerHTML = data.wallpapers.map(w => `
+      <div class="archive-card" onclick="openModal('/api/archive/${w.filename}?t=' + Date.now())">
+        <img src="/api/archive/${w.filename}?thumb=1&t=${Date.now()}" alt="${w.date}" loading="lazy">
+        <div class="date-label">${formatDate(w.date)}</div>
+      </div>
+    `).join('');
+  } catch (err) {
+    grid.innerHTML = '<div class="empty-state">Failed to load archive</div>';
+  }
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function openModal(src) {
+  document.getElementById('modal-img').src = src;
+  document.getElementById('modal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// --- Sources ---
+async function loadSources() {
+  const grid = document.getElementById('sources-grid');
+  try {
+    const res = await fetch('/api/sources');
+    const data = await res.json();
+
+    grid.innerHTML = data.sources.map(s => `
+      <div class="source-card ${s.active ? '' : 'inactive'}" id="source-${s.id}">
+        <div class="source-info">
+          <h3>${s.name}</h3>
+          <div class="source-meta">${s.quoteCount} quotes</div>
+          <span class="source-theme">${s.theme}</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" ${s.active ? 'checked' : ''} onchange="toggleSource('${s.id}', this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    `).join('');
+  } catch (err) {
+    grid.innerHTML = '<div class="empty-state">Failed to load sources</div>';
+  }
+}
+
+async function toggleSource(id, active) {
+  const card = document.getElementById('source-' + id);
+  card.classList.toggle('inactive', !active);
+
+  // Get current active sources from all checkboxes
+  const checkboxes = document.querySelectorAll('#sources-grid input[type="checkbox"]');
+  const cards = document.querySelectorAll('#sources-grid .source-card');
+  const activeSources = [];
+  cards.forEach((c, i) => {
+    if (checkboxes[i].checked) {
+      activeSources.push(c.id.replace('source-', ''));
+    }
+  });
+
+  try {
+    await fetch('/api/sources', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ activeSources }),
+    });
+  } catch (err) {
+    console.error('Failed to update sources:', err);
+  }
+}
+
+// --- Settings ---
+const resolutionPresets = {
+  '1920x1080': { w: 1920, h: 1080 },
+  '2560x1440': { w: 2560, h: 1440 },
+  '2560x1664': { w: 2560, h: 1664 },
+  '3024x1964': { w: 3024, h: 1964 },
+  '3456x2234': { w: 3456, h: 2234 },
+  '3840x2160': { w: 3840, h: 2160 },
+  '1366x768':  { w: 1366, h: 768 },
+};
+
+function applyResolutionPreset(value) {
+  const customRow = document.getElementById('custom-resolution-row');
+  if (value === 'custom') {
+    customRow.style.display = 'flex';
+  } else {
+    customRow.style.display = 'none';
+    const preset = resolutionPresets[value];
+    if (preset) {
+      document.getElementById('setting-res-width').value = preset.w;
+      document.getElementById('setting-res-height').value = preset.h;
+    }
+  }
+}
+
+function findMatchingPreset(w, h) {
+  for (const [key, val] of Object.entries(resolutionPresets)) {
+    if (val.w === w && val.h === h) return key;
+  }
+  return 'custom';
+}
+
+async function loadSettings() {
+  try {
+    const [settingsRes, platformRes] = await Promise.all([
+      fetch('/api/settings'),
+      fetch('/api/platform'),
+    ]);
+    const data = await settingsRes.json();
+    const platformData = await platformRes.json();
+
+    // Opacity & blur
+    document.getElementById('setting-opacity').value = data.background.darkenOpacity;
+    document.getElementById('opacity-value').textContent = data.background.darkenOpacity;
+    document.getElementById('setting-blur').value = data.background.blurSigma;
+    document.getElementById('blur-value').textContent = data.background.blurSigma;
+
+    // Fonts
+    document.getElementById('setting-font-quote').value = data.font.quote;
+    document.getElementById('setting-font-attr').value = data.font.attribution;
+    document.getElementById('font-hint').textContent =
+      `Active font on this machine: ${platformData.resolvedFont}`;
+
+    // Resolution
+    const preset = findMatchingPreset(data.resolution.width, data.resolution.height);
+    document.getElementById('setting-resolution').value = preset;
+    document.getElementById('setting-res-width').value = data.resolution.width;
+    document.getElementById('setting-res-height').value = data.resolution.height;
+    document.getElementById('custom-resolution-row').style.display =
+      preset === 'custom' ? 'flex' : 'none';
+
+    // All displays (macOS only)
+    document.getElementById('setting-all-displays').checked = data.setAllDisplays;
+    if (platformData.platform !== 'macos') {
+      document.getElementById('all-displays-hint').textContent =
+        'This setting only applies to macOS.';
+      document.getElementById('setting-all-displays').disabled = true;
+    }
+  } catch (err) {
+    console.error('Failed to load settings:', err);
+  }
+}
+
+async function saveSettings() {
+  const status = document.getElementById('settings-status');
+  try {
+    const w = parseInt(document.getElementById('setting-res-width').value) || 1920;
+    const h = parseInt(document.getElementById('setting-res-height').value) || 1080;
+
+    const body = {
+      resolution: { width: w, height: h },
+      background: {
+        darkenOpacity: parseFloat(document.getElementById('setting-opacity').value),
+        blurSigma: parseFloat(document.getElementById('setting-blur').value),
+      },
+      font: {
+        quote: document.getElementById('setting-font-quote').value,
+        attribution: document.getElementById('setting-font-attr').value,
+      },
+      setAllDisplays: document.getElementById('setting-all-displays').checked,
+    };
+
+    const res = await fetch('/api/settings', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    status.textContent = data.success ? 'Settings saved!' : 'Error saving settings';
+  } catch (err) {
+    status.textContent = 'Error: ' + err.message;
+  }
+  setTimeout(() => { status.textContent = ''; }, 3000);
+}
+
+// --- Schedule ---
+let detectedPlatform = null;
+let selectedPlatform = null;
+
+const platformInstructions = {
+  macos: {
+    name: 'macOS',
+    scheduler: 'launchd',
+    install: 'bash scripts/install-launchd.sh',
+    uninstall: 'bash scripts/install-launchd.sh uninstall',
+    notes: 'You may need to grant Terminal permission to control System Events in <strong>System Settings &gt; Privacy &gt; Automation</strong>.',
+  },
+  windows: {
+    name: 'Windows',
+    scheduler: 'Task Scheduler',
+    install: 'powershell -ExecutionPolicy Bypass -File scripts\\install-task-scheduler.ps1',
+    uninstall: 'powershell -ExecutionPolicy Bypass -File scripts\\install-task-scheduler.ps1 -Uninstall',
+    notes: 'Run PowerShell as <strong>Administrator</strong> to create the scheduled task.',
+  },
+  linux: {
+    name: 'Linux / ChromeOS',
+    scheduler: 'cron',
+    install: 'bash scripts/install-cron.sh',
+    uninstall: 'bash scripts/install-cron.sh uninstall',
+    notes: 'On ChromeOS, enable the Linux development environment in Settings first, then run from the Linux terminal.',
+  },
+};
+
+function selectPlatform(platform) {
+  selectedPlatform = platform;
+  document.querySelectorAll('.platform-card').forEach(c => {
+    c.classList.toggle('active', c.dataset.platform === platform);
+  });
+  renderPlatformInstructions(platform);
+}
+
+function renderPlatformInstructions(platform) {
+  const info = platformInstructions[platform];
+  const box = document.getElementById('platform-instructions');
+  const isDetected = platform === detectedPlatform;
+
+  box.innerHTML = `
+    <h3>${info.name} &mdash; ${info.scheduler}</h3>
+    ${!isDetected ? '<div style="color:var(--yellow);font-size:13px;margin-bottom:12px;">This is not the detected OS for this machine. The install button will use the server\'s detected OS. To install manually, run the command below on the target machine.</div>' : ''}
+    <div style="margin-bottom:8px;">To install the daily schedule (7:00 AM):</div>
+    <code class="cmd-block">${info.install}</code>
+    <div style="margin-bottom:8px;">To uninstall:</div>
+    <code class="cmd-block">${info.uninstall}</code>
+    <div class="hint">${info.notes}</div>
+  `;
+}
+
+async function loadSchedule() {
+  try {
+    const res = await fetch('/api/schedule');
+    const data = await res.json();
+
+    // Set detected platform from server and auto-select it on first load
+    detectedPlatform = data.platform || 'linux';
+    if (!selectedPlatform) {
+      selectPlatform(detectedPlatform);
+    }
+
+    // Mark the detected platform card
+    document.querySelectorAll('.platform-card').forEach(c => {
+      c.classList.toggle('detected', c.dataset.platform === detectedPlatform);
+    });
+
+    const badge = document.getElementById('schedule-badge');
+    badge.textContent = data.status;
+    badge.className = 'status-badge ' + (data.loaded ? 'running' : data.installed ? 'installed' : 'not-installed');
+
+    document.getElementById('schedule-time').textContent = data.loaded ? `Daily at ${data.scheduledTime}` : '';
+
+    document.getElementById('schedule-install-btn').style.display = data.loaded ? 'none' : 'inline-block';
+    document.getElementById('schedule-uninstall-btn').style.display = data.installed ? 'inline-block' : 'none';
+
+    // Only show logs on the detected platform (other platforms are manual-only)
+    const hasLogs = data.lastLog || data.lastErr;
+    const isDetected = selectedPlatform === detectedPlatform;
+    document.getElementById('log-section-label').style.display = isDetected && hasLogs ? 'block' : 'none';
+    document.getElementById('schedule-log').style.display = isDetected && hasLogs ? 'block' : 'none';
+
+    if (isDetected) {
+      const log = data.lastLog || 'No log output yet.';
+      const err = data.lastErr ? '\n--- Errors ---\n' + data.lastErr : '';
+      document.getElementById('schedule-log').textContent = log + err;
+    }
+  } catch (err) {
+    document.getElementById('schedule-log').textContent = 'Failed to load schedule status';
+  }
+}
+
+async function installSchedule() {
+  const btn = document.getElementById('schedule-install-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Installing...';
+  try {
+    await fetch('/api/schedule/install', { method: 'POST' });
+    loadSchedule();
+  } catch (err) {
+    console.error('Failed to install:', err);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Install Schedule';
+  }
+}
+
+async function uninstallSchedule() {
+  const btn = document.getElementById('schedule-uninstall-btn');
+  btn.disabled = true;
+  btn.textContent = 'Uninstalling...';
+  try {
+    await fetch('/api/schedule/uninstall', { method: 'POST' });
+    loadSchedule();
+  } catch (err) {
+    console.error('Failed to uninstall:', err);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Uninstall Schedule';
+  }
+}
+
+// --- Init ---
+loadToday();
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.claude/
+.DS_Store
+com.inspiration.daily.plist
+
+# Generated images (but allow docs/ screenshots for the README)
+*.png
+*.jpg
+!docs/**/*.png
+!docs/**/*.jpg

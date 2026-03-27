@@ -1,0 +1,17 @@
+{
+  "activeSources": ["naval", "zen", "stoicism", "rumi", "watts", "musashi", "emerson", "buddha", "laotzu", "brown"],
+  "resolution": {
+    "width": 3456,
+    "height": 2234
+  },
+  "font": {
+    "quote": "Avenir Next",
+    "attribution": "Avenir Next"
+  },
+  "background": {
+    "darkenOpacity": 0.45,
+    "blurSigma": 2
+  },
+  "archivePath": "~/Pictures/DailyQuotes",
+  "setAllDisplays": true
+}
