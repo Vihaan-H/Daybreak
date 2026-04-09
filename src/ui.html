@@ -235,6 +235,13 @@
     color: var(--text-dim);
   }
 
+  .archive-card .archive-quote {
+    padding: 0 14px 12px;
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
   /* Modal */
   .modal-overlay {
     display: none;
@@ -953,6 +960,7 @@ async function loadArchive() {
       <div class="archive-card" onclick="openModal('/api/archive/${w.filename}?t=' + Date.now())">
         <img src="/api/archive/${w.filename}?thumb=1&t=${Date.now()}" alt="${w.date}" loading="lazy">
         <div class="date-label">${formatDate(w.date)}</div>
+        ${w.quote ? `<div class="archive-quote">"${w.quote}" — ${w.author || 'Unknown'}</div>` : ''}
       </div>
     `).join('');
   } catch (err) {
