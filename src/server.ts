@@ -50,7 +50,15 @@ import { registerFonts, getResolvedFontFamily } from "./canvas/fonts.js";
 import type { QuoteSource } from "./quotes/types.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const PORT = 3456;
+const PORT = Number(process.env.PORT ?? "3456");
+
+function shouldOpenBrowser(): boolean {
+  return (
+    !process.env.CI &&
+    process.env.NO_OPEN !== "1" &&
+    !process.env.RENDER_SERVICE_ID
+  );
+}
 
 // ---------------------------------------------------------------------------
 // Quote state persistence
@@ -573,7 +581,9 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
 const server = http.createServer(handleRequest);
 server.listen(PORT, () => {
   console.log(`\n  Inspiration UI running at http://localhost:${PORT}\n`);
-  try {
-    execSync(openUrl(`http://localhost:${PORT}`));
-  } catch {}
+  if (shouldOpenBrowser()) {
+    try {
+      execSync(openUrl(`http://localhost:${PORT}`));
+    } catch {}
+  }
 });

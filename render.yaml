@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: daybreak-ui
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm run ui
+    envVars:
+      - key: NODE_ENV
+        value: production
+    healthCheckPath: /api/today

@@ -1,16 +1,20 @@
 {
-  "activeSources": ["naval", "zen", "stoicism", "rumi", "watts", "musashi", "emerson", "buddha", "laotzu", "brown"],
+  "activeSources": [
+    "buddha",
+    "inspirational",
+    "rumi"
+  ],
   "resolution": {
-    "width": 3456,
-    "height": 2234
+    "width": 1366,
+    "height": 768
   },
   "font": {
     "quote": "Avenir Next",
-    "attribution": "Avenir Next"
+    "attribution": "DejaVu Sans"
   },
   "background": {
-    "darkenOpacity": 0.45,
-    "blurSigma": 2
+    "darkenOpacity": 0.75,
+    "blurSigma": 2.5
   },
   "archivePath": "~/Pictures/DailyQuotes",
   "setAllDisplays": true
