@@ -1,0 +1,1087 @@
+{
+  "id": "inspirational",
+  "name": "Inspirational Collection",
+  "theme": "motivation courage growth achievement success",
+  "quotes": [
+    {
+      "text": "Imagination is more important than knowledge.",
+      "author": "Albert Einstein",
+      "category": "Creativity & Innovation",
+      "theme": "creative thinking"
+    },
+    {
+      "text": "Innovation distinguishes between a leader and a follower.",
+      "author": "Steve Jobs",
+      "category": "Creativity & Innovation",
+      "theme": "technology"
+    },
+    {
+      "text": "The best way to predict the future is to create it.",
+      "author": "Peter Drucker",
+      "category": "Creativity & Innovation",
+      "theme": "foresight"
+    },
+    {
+      "text": "In the middle of difficulty lies opportunity.",
+      "author": "Albert Einstein",
+      "category": "Creativity & Innovation",
+      "theme": "problem-solving"
+    },
+    {
+      "text": "Creativity takes courage.",
+      "author": "Henri Matisse",
+      "category": "Creativity & Innovation",
+      "theme": "art"
+    },
+    {
+      "text": "The chief enemy of creativity is good sense.",
+      "author": "Pablo Picasso",
+      "category": "Creativity & Innovation",
+      "theme": "artistic expression"
+    },
+    {
+      "text": "Ideas are like rabbits. You get a couple and learn how to handle them, and pretty soon you have a dozen.",
+      "author": "John Steinbeck",
+      "category": "Creativity & Innovation",
+      "theme": "brainstorming"
+    },
+    {
+      "text": "Creativity is intelligence having fun.",
+      "author": "Albert Einstein",
+      "category": "Creativity & Innovation",
+      "theme": "playfulness"
+    },
+    {
+      "text": "The absence of limitations is the enemy of art.",
+      "author": "Orson Welles",
+      "category": "Creativity & Innovation",
+      "theme": "constraints"
+    },
+    {
+      "text": "Creativity is just connecting things.",
+      "author": "Steve Jobs",
+      "category": "Creativity & Innovation",
+      "theme": "synthesis"
+    },
+    {
+      "text": "You can't use up creativity. The more you use, the more you have.",
+      "author": "Maya Angelou",
+      "category": "Creativity & Innovation",
+      "theme": "abundance"
+    },
+    {
+      "text": "Every artist was first an amateur.",
+      "author": "Ralph Waldo Emerson",
+      "category": "Creativity & Innovation",
+      "theme": "mastery"
+    },
+    {
+      "text": "Don't think. Thinking is the enemy of creativity.",
+      "author": "Ray Bradbury",
+      "category": "Creativity & Innovation",
+      "theme": "intuition"
+    },
+    {
+      "text": "The secret to getting ahead is getting started.",
+      "author": "Mark Twain",
+      "category": "Creativity & Innovation",
+      "theme": "execution"
+    },
+    {
+      "text": "It always seems impossible until it's done.",
+      "author": "Nelson Mandela",
+      "category": "Creativity & Innovation",
+      "theme": "persistence"
+    },
+    {
+      "text": "Great creations are born in the gap between the vision and reality.",
+      "author": "Seth Godin",
+      "category": "Creativity & Innovation",
+      "theme": "vision"
+    },
+    {
+      "text": "The only way to do great work is to love what you do.",
+      "author": "Steve Jobs",
+      "category": "Creativity & Innovation",
+      "theme": "passion"
+    },
+    {
+      "text": "Innovation is saying no to 1,000 things.",
+      "author": "Steve Jobs",
+      "category": "Creativity & Innovation",
+      "theme": "focus"
+    },
+    {
+      "text": "The future belongs to those who believe in the beauty of their dreams.",
+      "author": "Eleanor Roosevelt",
+      "category": "Creativity & Innovation",
+      "theme": "aspiration"
+    },
+    {
+      "text": "Your work is going to fill a large part of your life and the only way to be truly satisfied is to do what you believe is great work.",
+      "author": "Steve Jobs",
+      "category": "Creativity & Innovation",
+      "theme": "fulfillment"
+    },
+    {
+      "text": "Genius is one percent inspiration and ninety-nine percent perspiration.",
+      "author": "Thomas Edison",
+      "category": "Creativity & Innovation",
+      "theme": "invention"
+    },
+    {
+      "text": "The role of a creative person is not to be an expert.",
+      "author": "John Cleese",
+      "category": "Creativity & Innovation",
+      "theme": "humility"
+    },
+    {
+      "text": "Everything you want is on the other side of fear.",
+      "author": "George Addair",
+      "category": "Creativity & Innovation",
+      "theme": "courage"
+    },
+    {
+      "text": "Do something nobody has ever done before.",
+      "author": "Bob Ross",
+      "category": "Creativity & Innovation",
+      "theme": "originality"
+    },
+    {
+      "text": "Create with the heart; build with the mind.",
+      "author": "Criss Jami",
+      "category": "Creativity & Innovation",
+      "theme": "balance"
+    },
+    {
+      "text": "Creativity is the power to connect the seemingly unconnected.",
+      "author": "William Plomer",
+      "category": "Creativity & Innovation",
+      "theme": "connection"
+    },
+    {
+      "text": "The more that you read, the more things you will know.",
+      "author": "Dr. Seuss",
+      "category": "Creativity & Innovation",
+      "theme": "learning"
+    },
+    {
+      "text": "Pretend you are designing clothes for all of these women.",
+      "author": "Adele",
+      "category": "Creativity & Innovation",
+      "theme": "empathy"
+    },
+    {
+      "text": "You see things and you say, Why? But I dream things that never were and I say, Why not?",
+      "author": "George Bernard Shaw",
+      "category": "Creativity & Innovation",
+      "theme": "imagination"
+    },
+    {
+      "text": "Don't go around saying the world owes you a living.",
+      "author": "Bill Cosby",
+      "category": "Creativity & Innovation",
+      "theme": "self-reliance"
+    },
+    {
+      "text": "The only source of knowledge is experience.",
+      "author": "Albert Einstein",
+      "category": "Wisdom & Philosophy",
+      "theme": "empiricism"
+    },
+    {
+      "text": "The Tao that can be told is not the eternal Tao.",
+      "author": "Lao Tzu",
+      "category": "Wisdom & Philosophy",
+      "theme": "taoism"
+    },
+    {
+      "text": "Do not do to others what you do not want done to yourself.",
+      "author": "Confucius",
+      "category": "Wisdom & Philosophy",
+      "theme": "reciprocity"
+    },
+    {
+      "text": "The unexamined life is not worth living.",
+      "author": "Socrates",
+      "category": "Wisdom & Philosophy",
+      "theme": "introspection"
+    },
+    {
+      "text": "Courage is knowing what not to fear.",
+      "author": "Plato",
+      "category": "Wisdom & Philosophy",
+      "theme": "stoicism"
+    },
+    {
+      "text": "I think, therefore I am.",
+      "author": "Ren\u00e9 Descartes",
+      "category": "Wisdom & Philosophy",
+      "theme": "consciousness"
+    },
+    {
+      "text": "To be or not to be, that is the question.",
+      "author": "William Shakespeare",
+      "category": "Wisdom & Philosophy",
+      "theme": "existence"
+    },
+    {
+      "text": "Know thyself.",
+      "author": "Socrates",
+      "category": "Wisdom & Philosophy",
+      "theme": "self-knowledge"
+    },
+    {
+      "text": "The only true wisdom is in knowing you know nothing.",
+      "author": "Socrates",
+      "category": "Wisdom & Philosophy",
+      "theme": "humility"
+    },
+    {
+      "text": "It is impossible for a man to learn what he thinks he already knows.",
+      "author": "Epictetus",
+      "category": "Wisdom & Philosophy",
+      "theme": "openness"
+    },
+    {
+      "text": "The mind is everything. What you think you become.",
+      "author": "Buddha",
+      "category": "Wisdom & Philosophy",
+      "theme": "buddhism"
+    },
+    {
+      "text": "We cannot live only for ourselves.",
+      "author": "Herman Melville",
+      "category": "Wisdom & Philosophy",
+      "theme": "community"
+    },
+    {
+      "text": "Everything we hear is an opinion, not a fact.",
+      "author": "Marcus Aurelius",
+      "category": "Wisdom & Philosophy",
+      "theme": "discernment"
+    },
+    {
+      "text": "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+      "author": "Nelson Mandela",
+      "category": "Wisdom & Philosophy",
+      "theme": "resilience"
+    },
+    {
+      "text": "It is not things themselves that disturb people, but their judgments about those things.",
+      "author": "Epictetus",
+      "category": "Wisdom & Philosophy",
+      "theme": "perception"
+    },
+    {
+      "text": "Knowing is not enough, we must apply.",
+      "author": "Johann Wolfgang Von Goethe",
+      "category": "Wisdom & Philosophy",
+      "theme": "action"
+    },
+    {
+      "text": "Three things cannot be long hidden: the sun, the moon, and the truth.",
+      "author": "Buddha",
+      "category": "Wisdom & Philosophy",
+      "theme": "truth"
+    },
+    {
+      "text": "Man is not worried by real problems so much as by his conception of them.",
+      "author": "Epictetus",
+      "category": "Wisdom & Philosophy",
+      "theme": "perspective"
+    },
+    {
+      "text": "The path to enlightenment is not a path at all.",
+      "author": "Zen Proverb",
+      "category": "Wisdom & Philosophy",
+      "theme": "zen"
+    },
+    {
+      "text": "By three methods we may learn wisdom: First, by reflection, which is noblest.",
+      "author": "Confucius",
+      "category": "Wisdom & Philosophy",
+      "theme": "reflection"
+    },
+    {
+      "text": "The only true failure is the failure to try.",
+      "author": "George Edward Woodberry",
+      "category": "Wisdom & Philosophy",
+      "theme": "effort"
+    },
+    {
+      "text": "As within, so without.",
+      "author": "Hermes Trismegistus",
+      "category": "Wisdom & Philosophy",
+      "theme": "hermetics"
+    },
+    {
+      "text": "The supreme art of all is the art of knowing when to stop.",
+      "author": "Confucius",
+      "category": "Wisdom & Philosophy",
+      "theme": "moderation"
+    },
+    {
+      "text": "Whereof one cannot speak, thereof one must be silent.",
+      "author": "Ludwig Wittgenstein",
+      "category": "Wisdom & Philosophy",
+      "theme": "language"
+    },
+    {
+      "text": "The cave you fear to enter holds the treasure you seek.",
+      "author": "Joseph Campbell",
+      "category": "Wisdom & Philosophy",
+      "theme": "mythology"
+    },
+    {
+      "text": "No man ever steps in the same river twice.",
+      "author": "Heraclitus",
+      "category": "Wisdom & Philosophy",
+      "theme": "flux"
+    },
+    {
+      "text": "Life is what happens when you're busy making other plans.",
+      "author": "John Lennon",
+      "category": "Wisdom & Philosophy",
+      "theme": "acceptance"
+    },
+    {
+      "text": "Peace comes from within. Do not seek it without.",
+      "author": "Buddha",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "inner peace"
+    },
+    {
+      "text": "The mind is like water. When it is turbulent, it is difficult to see. When it is calm, everything is clear.",
+      "author": "Buddha",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "meditation"
+    },
+    {
+      "text": "What we think, we become.",
+      "author": "Buddha",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "thought patterns"
+    },
+    {
+      "text": "The wound is the place where the Light enters you.",
+      "author": "Rumi",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "healing"
+    },
+    {
+      "text": "The only way to make sense out of change is to plunge into it, move with it, and join the dance.",
+      "author": "Alan Watts",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "acceptance"
+    },
+    {
+      "text": "Yesterday is history, tomorrow is mystery, today is a gift.",
+      "author": "Master Oogway",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "present moment"
+    },
+    {
+      "text": "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.",
+      "author": "Buddha",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "mindfulness"
+    },
+    {
+      "text": "When you realize there is nothing lacking, the whole world belongs to you.",
+      "author": "Lao Tzu",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "contentment"
+    },
+    {
+      "text": "Silence is a true friend who never betrays.",
+      "author": "Confucius",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "silence"
+    },
+    {
+      "text": "The practice of forgiveness is our most important contribution to the healing of the world.",
+      "author": "Marianne Williamson",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "forgiveness"
+    },
+    {
+      "text": "Let it go.",
+      "author": "Elsa",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "release"
+    },
+    {
+      "text": "Mindfulness is about being fully awake in our lives.",
+      "author": "Jon Kabat-Zinn",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "awareness"
+    },
+    {
+      "text": "The quieter you become, the more you can hear.",
+      "author": "Ram Dass",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "listening"
+    },
+    {
+      "text": "Everything you worry about is already okay.",
+      "author": "Neale Donald Walsch",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "worry"
+    },
+    {
+      "text": "You cannot control the wind, but you can adjust your sails.",
+      "author": "Dolly Parton",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "adaptation"
+    },
+    {
+      "text": "The seed of suffering is in the seed of happiness, and vice versa.",
+      "author": "Thich Nhat Hanh",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "duality"
+    },
+    {
+      "text": "Respond, don't react.",
+      "author": "Amit Ray",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "composure"
+    },
+    {
+      "text": "Just as the body needs food to grow strong, the soul needs stillness to grow wise.",
+      "author": "Unknown",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "spirituality"
+    },
+    {
+      "text": "Breathe. You are exactly where you need to be.",
+      "author": "Unknown",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "breath"
+    },
+    {
+      "text": "The mind is the source of all suffering or all happiness.",
+      "author": "Buddha",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "mental state"
+    },
+    {
+      "text": "Love and compassion are necessities, not luxuries.",
+      "author": "Dalai Lama",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "compassion"
+    },
+    {
+      "text": "To understand the world, one must not be too much in it.",
+      "author": "Albert Camus",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "detachment"
+    },
+    {
+      "text": "No mud, no lotus.",
+      "author": "Thich Nhat Hanh",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "growth"
+    },
+    {
+      "text": "Calm is contagious.",
+      "author": "Unknown",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "serenity"
+    },
+    {
+      "text": "The best remedy for anger is delay.",
+      "author": "Seneca",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "anger management"
+    },
+    {
+      "text": "In the depth of winter, I finally learned that there was in me an invincible summer.",
+      "author": "Albert Camus",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "inner strength"
+    },
+    {
+      "text": "The greatest wealth is peace of mind.",
+      "author": "Unknown",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "wealth"
+    },
+    {
+      "text": "Bloom where you are planted.",
+      "author": "Unknown",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "acceptance"
+    },
+    {
+      "text": "What lies behind us and what lies before us are tiny matters compared to what lies within us.",
+      "author": "Ralph Waldo Emerson",
+      "category": "Personal Growth & Potential",
+      "theme": "inner strength"
+    },
+    {
+      "text": "Believe you can and you're halfway there.",
+      "author": "Theodore Roosevelt",
+      "category": "Personal Growth & Potential",
+      "theme": "belief"
+    },
+    {
+      "text": "The only limit to our realization of tomorrow will be our doubts of today.",
+      "author": "Franklin D. Roosevelt",
+      "category": "Personal Growth & Potential",
+      "theme": "doubt"
+    },
+    {
+      "text": "You miss 100% of the shots you don't take.",
+      "author": "Wayne Gretzky",
+      "category": "Personal Growth & Potential",
+      "theme": "risk-taking"
+    },
+    {
+      "text": "The journey of a thousand miles begins with one step.",
+      "author": "Lao Tzu",
+      "category": "Personal Growth & Potential",
+      "theme": "beginning"
+    },
+    {
+      "text": "Desire is a contract you make with yourself to be unhappy until you get what you want.",
+      "author": "Naval Ravikant",
+      "category": "Personal Growth & Potential",
+      "theme": "desire"
+    },
+    {
+      "text": "You are braver than you believe, stronger than you seem, and smarter than you think.",
+      "author": "A.A. Milne",
+      "category": "Personal Growth & Potential",
+      "theme": "capability"
+    },
+    {
+      "text": "I learned that all wisdom is contained within myself.",
+      "author": "Janis Joplin",
+      "category": "Personal Growth & Potential",
+      "theme": "self-discovery"
+    },
+    {
+      "text": "The worst that can happen is they say no.",
+      "author": "Unknown",
+      "category": "Personal Growth & Potential",
+      "theme": "rejection"
+    },
+    {
+      "text": "Your potential is endless. Your power is now.",
+      "author": "Tony Robbins",
+      "category": "Personal Growth & Potential",
+      "theme": "potential"
+    },
+    {
+      "text": "The only impossible journey is the one you never begin.",
+      "author": "Tony Robbins",
+      "category": "Personal Growth & Potential",
+      "theme": "possibility"
+    },
+    {
+      "text": "You are never too old to set another goal or to dream a new dream.",
+      "author": "C.S. Lewis",
+      "category": "Personal Growth & Potential",
+      "theme": "age"
+    },
+    {
+      "text": "What you think, you become.",
+      "author": "Buddha",
+      "category": "Personal Growth & Potential",
+      "theme": "manifestation"
+    },
+    {
+      "text": "Twenty years from now you will be more disappointed by the things you didn't do.",
+      "author": "Mark Twain",
+      "category": "Personal Growth & Potential",
+      "theme": "regret"
+    },
+    {
+      "text": "Your limitation\u2014it's only your imagination.",
+      "author": "Unknown",
+      "category": "Personal Growth & Potential",
+      "theme": "limitations"
+    },
+    {
+      "text": "Great things never come from comfort zones.",
+      "author": "Unknown",
+      "category": "Personal Growth & Potential",
+      "theme": "growth"
+    },
+    {
+      "text": "Success is not final, failure is not fatal.",
+      "author": "Winston Churchill",
+      "category": "Personal Growth & Potential",
+      "theme": "success"
+    },
+    {
+      "text": "The man who moves a mountain begins by carrying away small stones.",
+      "author": "Confucius",
+      "category": "Personal Growth & Potential",
+      "theme": "incremental progress"
+    },
+    {
+      "text": "Be not afraid of growing slowly, be afraid only of standing still.",
+      "author": "Chinese Proverb",
+      "category": "Personal Growth & Potential",
+      "theme": "steady progress"
+    },
+    {
+      "text": "Dream it. Wish it. Do it.",
+      "author": "Unknown",
+      "category": "Personal Growth & Potential",
+      "theme": "action"
+    },
+    {
+      "text": "Success is walking from failure to failure with no loss of enthusiasm.",
+      "author": "Winston Churchill",
+      "category": "Personal Growth & Potential",
+      "theme": "persistence"
+    },
+    {
+      "text": "Don't watch the clock; do what it does. Keep going.",
+      "author": "Sam Levenson",
+      "category": "Personal Growth & Potential",
+      "theme": "momentum"
+    },
+    {
+      "text": "The only way out is through.",
+      "author": "Robert Frost",
+      "category": "Personal Growth & Potential",
+      "theme": "perseverance"
+    },
+    {
+      "text": "Life is 10% what happens to you and 90% how you react to it.",
+      "author": "Charles R. Swindoll",
+      "category": "Personal Growth & Potential",
+      "theme": "responsibility"
+    },
+    {
+      "text": "Do what you can with what you have where you are.",
+      "author": "Theodore Roosevelt",
+      "category": "Personal Growth & Potential",
+      "theme": "resourcefulness"
+    },
+    {
+      "text": "We are not makers of history. We are made by history.",
+      "author": "Martin Luther King Jr.",
+      "category": "Personal Growth & Potential",
+      "theme": "context"
+    },
+    {
+      "text": "The wound is the place where the Light enters you.",
+      "author": "Rumi",
+      "category": "Personal Growth & Potential",
+      "theme": "transformation"
+    },
+    {
+      "text": "Talent is a pursued interest. Anything you are willing to practice, you can do.",
+      "author": "Bob Ross",
+      "category": "Personal Growth & Potential",
+      "theme": "practice"
+    },
+    {
+      "text": "Genius is one percent inspiration and ninety-nine percent perspiration.",
+      "author": "Thomas Edison",
+      "category": "Work & Discipline",
+      "theme": "work ethic"
+    },
+    {
+      "text": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+      "author": "Aristotle",
+      "category": "Work & Discipline",
+      "theme": "habits"
+    },
+    {
+      "text": "Do nothing which is of no use.",
+      "author": "Miyamoto Musashi",
+      "category": "Work & Discipline",
+      "theme": "efficiency"
+    },
+    {
+      "text": "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.",
+      "author": "Steve Jobs",
+      "category": "Work & Discipline",
+      "theme": "purpose"
+    },
+    {
+      "text": "The early bird gets the worm.",
+      "author": "William Proverb",
+      "category": "Work & Discipline",
+      "theme": "punctuality"
+    },
+    {
+      "text": "Success is no accident. It is hard work, perseverance, learning, studying, sacrifice.",
+      "author": "Pel\u00e9",
+      "category": "Work & Discipline",
+      "theme": "dedication"
+    },
+    {
+      "text": "All things are difficult before they are easy.",
+      "author": "John Norley",
+      "category": "Work & Discipline",
+      "theme": "learning curve"
+    },
+    {
+      "text": "The only way to do great work is to love what you do.",
+      "author": "Steve Jobs",
+      "category": "Work & Discipline",
+      "theme": "passion"
+    },
+    {
+      "text": "I am not a product of my circumstances. I am a product of my decisions.",
+      "author": "Stephen Covey",
+      "category": "Work & Discipline",
+      "theme": "ownership"
+    },
+    {
+      "text": "Discipline is choosing between what you want now and what you want most.",
+      "author": "Abraham Lincoln",
+      "category": "Work & Discipline",
+      "theme": "sacrifice"
+    },
+    {
+      "text": "Work is love made visible.",
+      "author": "Kahlil Gibran",
+      "category": "Work & Discipline",
+      "theme": "meaning"
+    },
+    {
+      "text": "The master has failed more times than the beginner has even tried.",
+      "author": "Stephen McCranie",
+      "category": "Work & Discipline",
+      "theme": "mastery"
+    },
+    {
+      "text": "Slow progress is still progress.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "progress"
+    },
+    {
+      "text": "Excellence is a continuous journey.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "continuous improvement"
+    },
+    {
+      "text": "The more you sweat in training, the less you bleed in battle.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "preparation"
+    },
+    {
+      "text": "Success doesn't just find you. You have to go out and get it.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "initiative"
+    },
+    {
+      "text": "There is no such thing as a perfect time. The time is now.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "timing"
+    },
+    {
+      "text": "Quality means doing it right when no one is watching.",
+      "author": "Henry Ford",
+      "category": "Work & Discipline",
+      "theme": "integrity"
+    },
+    {
+      "text": "I hated every minute of training, but I said, don't quit. Suffer now and live the rest of your life as a champion.",
+      "author": "Muhammad Ali",
+      "category": "Work & Discipline",
+      "theme": "motivation"
+    },
+    {
+      "text": "Champions aren't made in the gyms. Champions are made from something they have deep inside them.",
+      "author": "Muhammad Ali",
+      "category": "Work & Discipline",
+      "theme": "inner drive"
+    },
+    {
+      "text": "If you want something, go out and get it. Period.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "determination"
+    },
+    {
+      "text": "Footsteps are easier followed than directions given.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "example"
+    },
+    {
+      "text": "The test isn't that you make it, but that you never stop trying.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "resilience"
+    },
+    {
+      "text": "Labor is the superior condition promoted by the dignity of work.",
+      "author": "John Paul II",
+      "category": "Work & Discipline",
+      "theme": "dignity"
+    },
+    {
+      "text": "Your limitation is only your lack of action.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "procrastination"
+    },
+    {
+      "text": "Don't aim for success if you want it; just do what you love and believe in, and it will come naturally.",
+      "author": "David Frost",
+      "category": "Work & Discipline",
+      "theme": "authenticity"
+    },
+    {
+      "text": "The most powerful thing you own is your attention.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "focus"
+    },
+    {
+      "text": "Be the change that you wish to see in the world.",
+      "author": "Mahatma Gandhi",
+      "category": "Vision & Leadership",
+      "theme": "transformation"
+    },
+    {
+      "text": "I have a dream.",
+      "author": "Martin Luther King Jr.",
+      "category": "Vision & Leadership",
+      "theme": "equality"
+    },
+    {
+      "text": "The present is theirs; the future, for which I really worked, is mine.",
+      "author": "Nikola Tesla",
+      "category": "Vision & Leadership",
+      "theme": "electricity"
+    },
+    {
+      "text": "Memento mori.",
+      "author": "Stoic Philosophy",
+      "category": "Vision & Leadership",
+      "theme": "mortality"
+    },
+    {
+      "text": "A leader is one who knows the way, goes the way, and shows the way.",
+      "author": "John C. Maxwell",
+      "category": "Vision & Leadership",
+      "theme": "leadership"
+    },
+    {
+      "text": "The only thing necessary for the triumph of evil is for good men to do nothing.",
+      "author": "Edmund Burke",
+      "category": "Vision & Leadership",
+      "theme": "action"
+    },
+    {
+      "text": "In a gentle way, you can shake the world.",
+      "author": "Mahatma Gandhi",
+      "category": "Vision & Leadership",
+      "theme": "non-violence"
+    },
+    {
+      "text": "The measure of intelligence is the ability to change.",
+      "author": "Albert Einstein",
+      "category": "Vision & Leadership",
+      "theme": "adaptability"
+    },
+    {
+      "text": "We accept the love we think we deserve.",
+      "author": "Stephen Chbosky",
+      "category": "Vision & Leadership",
+      "theme": "self-worth"
+    },
+    {
+      "text": "You yourself, as much as anybody in the entire universe, deserve your love and affection.",
+      "author": "Buddha",
+      "category": "Vision & Leadership",
+      "theme": "self-love"
+    },
+    {
+      "text": "It is during our darkest moments that we must focus to see the light.",
+      "author": "Aristotle",
+      "category": "Vision & Leadership",
+      "theme": "hope"
+    },
+    {
+      "text": "The only way to predict the future is to create it.",
+      "author": "Unknown",
+      "category": "Vision & Leadership",
+      "theme": "agency"
+    },
+    {
+      "text": "Darkness cannot drive out darkness; only light can do that.",
+      "author": "Martin Luther King Jr.",
+      "category": "Vision & Leadership",
+      "theme": "light"
+    },
+    {
+      "text": "If you are the smartest person in the room, then you're in the wrong room.",
+      "author": "Jim Henson",
+      "category": "Vision & Leadership",
+      "theme": "humility"
+    },
+    {
+      "text": "Every man is guilty of all the good he did not do.",
+      "author": "Voltaire",
+      "category": "Vision & Leadership",
+      "theme": "opportunity"
+    },
+    {
+      "text": "Leadership is not about being in charge. It's about taking care of those in your charge.",
+      "author": "Simon Sinek",
+      "category": "Vision & Leadership",
+      "theme": "service"
+    },
+    {
+      "text": "The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice.",
+      "author": "Brian Herbert",
+      "category": "Vision & Leadership",
+      "theme": "education"
+    },
+    {
+      "text": "A true leader has the confidence to stand alone, the courage to make tough decisions, and the compassion to listen to the needs of others.",
+      "author": "Douglas MacArthur",
+      "category": "Vision & Leadership",
+      "theme": "character"
+    },
+    {
+      "text": "People will forget what you said, people will forget what you did, but people will never forget how you made them feel.",
+      "author": "Maya Angelou",
+      "category": "Vision & Leadership",
+      "theme": "impact"
+    },
+    {
+      "text": "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+      "author": "Nelson Mandela",
+      "category": "Vision & Leadership",
+      "theme": "resilience"
+    },
+    {
+      "text": "Don't go around saying the world owes you a living. The world owes you nothing. It was here first.",
+      "author": "Mark Twain",
+      "category": "Vision & Leadership",
+      "theme": "responsibility"
+    },
+    {
+      "text": "I attribute my success to this: I never gave or took any excuse.",
+      "author": "Florence Nightingale",
+      "category": "Vision & Leadership",
+      "theme": "accountability"
+    },
+    {
+      "text": "You miss 100% of the shots you don't take.",
+      "author": "Wayne Gretzky",
+      "category": "Vision & Leadership",
+      "theme": "risk"
+    },
+    {
+      "text": "The key to success is to focus on goals, not obstacles.",
+      "author": "Unknown",
+      "category": "Vision & Leadership",
+      "theme": "focus"
+    },
+    {
+      "text": "Great leaders are willing to sacrifice their own personal interests for the good of the group.",
+      "author": "Unknown",
+      "category": "Vision & Leadership",
+      "theme": "sacrifice"
+    },
+    {
+      "text": "You cannot lead people to the future unless you are willing to stand alongside them.",
+      "author": "Boyd K. Packer",
+      "category": "Vision & Leadership",
+      "theme": "empathy"
+    },
+    {
+      "text": "The role of leadership is not to come up with all the answers. It's to come up with better questions.",
+      "author": "Unknown",
+      "category": "Vision & Leadership",
+      "theme": "inquiry"
+    },
+    {
+      "text": "Anxiety is the cost of today's stress or suffering tomorrow's imagined future.",
+      "author": "Amit Ray",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "anxiety"
+    },
+    {
+      "text": "Every moment is a fresh beginning.",
+      "author": "T.S. Eliot",
+      "category": "Inner Peace & Mindfulness",
+      "theme": "renewal"
+    },
+    {
+      "text": "The only glory in freedom is when you use it to improve yourself.",
+      "author": "Unknown",
+      "category": "Personal Growth & Potential",
+      "theme": "freedom"
+    },
+    {
+      "text": "Every expert was once a beginner.",
+      "author": "Unknown",
+      "category": "Personal Growth & Potential",
+      "theme": "beginning"
+    },
+    {
+      "text": "Change will not come if we wait for some other person, or some other time. We are the ones we've been waiting for.",
+      "author": "Barack Obama",
+      "category": "Vision & Leadership",
+      "theme": "change"
+    },
+    {
+      "text": "The future is not something we enter. The future is something we create.",
+      "author": "Leonard I. Sweet",
+      "category": "Vision & Leadership",
+      "theme": "creation"
+    },
+    {
+      "text": "To lead people, walk beside them.",
+      "author": "Unknown",
+      "category": "Vision & Leadership",
+      "theme": "connection"
+    },
+    {
+      "text": "The unexamined life is not worth living, but neither is the life spent examining it.",
+      "author": "Unknown",
+      "category": "Wisdom & Philosophy",
+      "theme": "balance"
+    },
+    {
+      "text": "The hardest part of knowing the truth is learning what to do with it.",
+      "author": "Unknown",
+      "category": "Wisdom & Philosophy",
+      "theme": "truth"
+    },
+    {
+      "text": "We cannot see what we are not ready to see.",
+      "author": "Ralph Waldo Emerson",
+      "category": "Wisdom & Philosophy",
+      "theme": "readiness"
+    },
+    {
+      "text": "Success usually comes to those who are too busy to be looking for it.",
+      "author": "Henry David Thoreau",
+      "category": "Work & Discipline",
+      "theme": "attention"
+    },
+    {
+      "text": "Discipline is remembering what you want.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "memory"
+    },
+    {
+      "text": "The only discipline that lasts is self-discipline.",
+      "author": "Unknown",
+      "category": "Work & Discipline",
+      "theme": "self-discipline"
+    }
+  ]
+}

@@ -10,6 +10,8 @@
 export interface Quote {
   text: string;
   author: string;
+  /** Optional category for organizing quotes (e.g., "Creativity", "Wisdom"). */
+  category?: string;
   /** Optional tags for future filtering (not currently used in selection). */
   tags?: string[];
 }
