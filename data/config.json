@@ -1,8 +1,17 @@
 {
   "activeSources": [
+    "brown",
     "buddha",
+    "emerson",
     "inspirational",
-    "rumi"
+    "inspirational",
+    "laotzu",
+    "musashi",
+    "naval",
+    "rumi",
+    "stoicism",
+    "watts",
+    "zen"
   ],
   "resolution": {
     "width": 1366,

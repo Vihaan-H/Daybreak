@@ -1,0 +1,4 @@
+{
+  "name": "Daybreak",
+  "postStartCommand": "npm run ui"
+}
