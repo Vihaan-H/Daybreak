@@ -55,7 +55,7 @@ async function main() {
   const wallpaperBuffer = await renderWallpaper(config, quote, backgroundPath);
 
   // 7. Archive
-  const archivedPath = archiveWallpaper(config, wallpaperBuffer);
+  const archivedPath = await archiveWallpaper(config, wallpaperBuffer, quote);
 
   // Also cache it so subsequent runs today are instant
   writeFileSync(getCachedWallpaperPath(config), wallpaperBuffer);

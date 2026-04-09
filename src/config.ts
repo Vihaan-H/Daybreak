@@ -55,6 +55,12 @@ export interface AppConfig {
   projectRoot: string;
   /** Absolute path to the cache directory (~/.cache/inspiration). */
   cachePath: string;
+  /** Supabase project URL for archive sync. */
+  supabaseUrl: string;
+  /** Supabase anon/public key for archive sync. */
+  supabaseAnonKey: string;
+  /** Storage bucket name for archived wallpapers. */
+  supabaseBucket: string;
 }
 
 /**
@@ -80,6 +86,12 @@ export function loadConfig(): AppConfig {
   const home = getHomedir();
   const archivePath = raw.archivePath.replace("~", home);
   const cachePath = resolve(home, ".cache", "inspiration");
+  const supabaseUrl =
+    process.env.SUPABASE_URL ?? "https://qmowrkiqsjuvzeyfqpsv.supabase.co";
+  const supabaseAnonKey =
+    process.env.SUPABASE_ANON_KEY ??
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtb3dya2lxc2p1dnpleWZxcHN2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTcyMTI1MSwiZXhwIjoyMDkxMjk3MjUxfQ.g90uOHSDJe9Is8dtByarGxEk1zkm9zUJWKAhx6GcTq4";
+  const supabaseBucket = process.env.SUPABASE_ARCHIVE_BUCKET ?? "wallpapers";
 
   return {
     activeSources: raw.activeSources,
@@ -91,5 +103,8 @@ export function loadConfig(): AppConfig {
     unsplashAccessKey,
     projectRoot: PROJECT_ROOT,
     cachePath,
+    supabaseUrl,
+    supabaseAnonKey,
+    supabaseBucket,
   };
 }

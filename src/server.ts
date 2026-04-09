@@ -44,6 +44,7 @@ import {
 import { fetchBackgroundImage } from "./images/unsplash.js";
 import { renderWallpaper, type RenderOptions } from "./canvas/renderer.js";
 import { archiveWallpaper } from "./wallpaper/archive.js";
+import { listArchiveRows, downloadArchiveImage } from "./wallpaper/supabaseArchive.js";
 import { setWallpaper } from "./wallpaper/setter.js";
 import { getTodayString } from "./utils/date.js";
 import { registerFonts, getResolvedFontFamily } from "./canvas/fonts.js";
@@ -215,7 +216,7 @@ async function handleGenerate(req: http.IncomingMessage, res: http.ServerRespons
     const quote = shuffle ? selectRandomQuote(sources) : selectDailyQuote(sources);
     const backgroundPath = await fetchBackgroundImage(config, quote.source.theme);
     const wallpaperBuffer = await renderWallpaper(config, quote, backgroundPath);
-    const archivedPath = archiveWallpaper(config, wallpaperBuffer);
+    const archivedPath = await archiveWallpaper(config, wallpaperBuffer, quote);
     writeFileSync(getCachedWallpaperPath(config), wallpaperBuffer);
     setWallpaper(archivedPath, config.setAllDisplays);
     saveQuoteState(quote);
@@ -317,6 +318,24 @@ async function handleWallpaperToday(res: http.ServerResponse) {
 
 async function handleArchiveList(res: http.ServerResponse) {
   const config = loadConfig();
+  try {
+    const rows = await listArchiveRows(config);
+    if (rows.length > 0) {
+      sendJson(res, {
+        wallpapers: rows.map((row) => ({
+          date: row.date,
+          filename: row.filename,
+          quote: row.quote_text,
+          author: row.quote_author,
+        })),
+      });
+      return;
+    }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    console.warn(`Supabase archive listing failed; falling back to local files. ${message}`);
+  }
+
   if (!existsSync(config.archivePath)) {
     sendJson(res, { wallpapers: [] });
     return;
@@ -331,6 +350,8 @@ async function handleArchiveList(res: http.ServerResponse) {
     wallpapers: files.map((f) => ({
       date: f.slice(0, 10),
       filename: f,
+      quote: "",
+      author: "",
     })),
   });
 }
@@ -343,19 +364,24 @@ async function handleArchiveImage(res: http.ServerResponse, filename: string, th
 
   const config = loadConfig();
   const filePath = resolve(config.archivePath, filename);
-  if (!existsSync(filePath)) {
-    sendError(res, 404, "Not found");
-    return;
+  let imageBuffer: Buffer | null = null;
+  if (existsSync(filePath)) {
+    imageBuffer = readFileSync(filePath);
+  } else {
+    imageBuffer = await downloadArchiveImage(config, filename);
+    if (!imageBuffer) {
+      sendError(res, 404, "Not found");
+      return;
+    }
   }
 
   if (thumb) {
-    const buffer = await sharp(filePath).resize(400).png().toBuffer();
+    const buffer = await sharp(imageBuffer).resize(400).png().toBuffer();
     res.writeHead(200, { "Content-Type": "image/png", "Cache-Control": "no-cache" });
     res.end(buffer);
   } else {
-    const data = readFileSync(filePath);
     res.writeHead(200, { "Content-Type": "image/png" });
-    res.end(data);
+    res.end(imageBuffer);
   }
 }
 
