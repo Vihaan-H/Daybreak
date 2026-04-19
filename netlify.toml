@@ -1,0 +1,15 @@
+[build]
+  publish = "src"
+
+[functions]
+  directory = "netlify/functions"
+
+[dev]
+  command = "npm run ui"
+  targetPort = 3456
+  port = 8888
+
+[[redirects]]
+  from = "/"
+  to = "/ui.html"
+  status = 200

@@ -93,7 +93,7 @@
     border-radius: var(--radius);
     overflow: hidden;
     margin-bottom: 24px;
-    background: var(--bg-card);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #1a1a2e 100%);
     aspect-ratio: 3456 / 2234;
     position: relative;
   }
@@ -649,6 +649,10 @@
   <div class="nav-item" data-section="schedule">
     <span class="nav-icon">&#9201;</span>Schedule
   </div>
+  <div style="flex:1;"></div>
+  <a href="/logout" class="nav-item" style="text-decoration:none; color:var(--text-dim); border-top:1px solid var(--border); margin-top:8px;">
+    <span class="nav-icon">&#10140;</span>Log out
+  </a>
 </nav>
 
 <main class="main">
@@ -840,10 +844,25 @@ document.querySelectorAll('.nav-item').forEach(item => {
   });
 });
 
+// --- Static quotes for when API is unavailable ---
+const staticQuotes = [
+  { text: "Before enlightenment, chop wood, carry water. After enlightenment, chop wood, carry water.", author: "Zen Proverb", source: "Zen Wisdom" },
+  { text: "The obstacle is the path.", author: "Zen Proverb", source: "Zen Wisdom" },
+  { text: "Happiness is not something ready made. It comes from your own actions.", author: "Dalai Lama", source: "Buddha" },
+  { text: "The only way to do great work is to love what you do.", author: "Naval Ravikant", source: "Naval" },
+  { text: "He who is not everyday conquering some fear has not learned the secret of life.", author: "Ralph Waldo Emerson", source: "Emerson" },
+];
+
+function getStaticQuote() {
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  return staticQuotes[dayOfYear % staticQuotes.length];
+}
+
 // --- Today ---
 async function loadToday() {
   try {
     const res = await fetch('/api/today');
+    if (!res.ok) throw new Error('API unavailable');
     const data = await res.json();
 
     // Show the quote
@@ -864,8 +883,16 @@ async function loadToday() {
       placeholder.textContent = 'No wallpaper generated yet';
     }
   } catch (err) {
-    console.error('Failed to load today:', err);
-    document.getElementById('wallpaper-placeholder').textContent = 'Failed to load';
+    console.log('API not available, showing static preview');
+    const quote = getStaticQuote();
+    document.getElementById('quote-display').style.display = 'block';
+    document.getElementById('today-quote').textContent = `"${quote.text}"`;
+    document.getElementById('today-author').textContent = `— ${quote.author}`;
+    document.getElementById('today-source').textContent = quote.source;
+
+    const placeholder = document.getElementById('wallpaper-placeholder');
+    placeholder.style.display = 'flex';
+    placeholder.innerHTML = '<div style="text-align:center;"><div style="font-size:48px;margin-bottom:16px;opacity:0.6;">&#9788;</div><div style="font-size:15px;color:var(--text-dim);">Daily wallpaper preview</div><div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Run locally with <code style="background:var(--bg-input);padding:2px 6px;border-radius:4px;">npm run ui</code> to generate wallpapers</div></div>';
   }
 }
 
@@ -949,6 +976,7 @@ async function loadArchive() {
   const grid = document.getElementById('archive-grid');
   try {
     const res = await fetch('/api/archive');
+    if (!res.ok) throw new Error('API unavailable');
     const data = await res.json();
 
     if (data.wallpapers.length === 0) {
@@ -989,6 +1017,7 @@ async function loadSources() {
   const grid = document.getElementById('sources-grid');
   try {
     const res = await fetch('/api/sources');
+    if (!res.ok) throw new Error('API unavailable');
     const data = await res.json();
 
     grid.innerHTML = data.sources.map(s => `
